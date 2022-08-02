@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"golang-books/basic"
-	protocol_client "golang-books/protocol/client"
-	protocol_server "golang-books/protocol/server"
+	protocol_client "golang-books/protocol/rpc/client"
+	protocol_server "golang-books/protocol/rpc/server"
 )
 
 func main() {
