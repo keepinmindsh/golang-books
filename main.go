@@ -23,4 +23,13 @@ func main() {
 	basic.TestPointer()
 
 	basic.Print()
+
+	// STRUCT
+	var s basic.Student = basic.Student{
+		ClassInfo: basic.ClassInfo{Class: 10, No: 10},
+		Name:      "Seung Hwa",
+		No:        1,
+	}
+
+	fmt.Print(s)
 }

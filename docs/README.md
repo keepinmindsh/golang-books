@@ -16,7 +16,9 @@
 
 > [Golang - nil](https://2kindsofcs.tistory.com/3)
 
-> [Golang - Function](https://go.dev/tour/basics/9)
+> [Golang - Function](https://go.dev/tour/basics/9)  
+
+> [Golang - Structure](https://dev-yakuza.posstree.com/ko/golang/struct/)
 
 ### Golang 기반 Clean Architecture
 
