@@ -18,7 +18,9 @@
 
 > [Golang - Function](https://go.dev/tour/basics/9)  
 
-> [Golang - Structure](https://dev-yakuza.posstree.com/ko/golang/struct/)
+> [Golang - Structure](https://dev-yakuza.posstree.com/ko/golang/struct/)  
+
+> [Golang - Go Routine](https://dev-yakuza.posstree.com/ko/golang/goroutine/)  
 
 ### Golang 기반 Clean Architecture
 
@@ -27,7 +29,6 @@
 ### Golang Protocol ( RPC, HTTP, TCP )
 
 > [RPC, HTTP, TCP](https://judo0179.tistory.com/92)  
-
 
 ### Golang Sample Project for study
 
