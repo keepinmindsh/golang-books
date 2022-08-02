@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"golang-books/basic"
+	protocol_client "golang-books/protocol/client"
+	protocol_server "golang-books/protocol/server"
 )
 
 func main() {
@@ -32,4 +34,8 @@ func main() {
 	}
 
 	fmt.Print(s)
+
+	go protocol_client.Server()
+
+	protocol_server.Client()
 }
