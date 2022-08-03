@@ -35,7 +35,16 @@ func main() {
 
 	fmt.Print(s)
 
+	basic.ConstAndVar()
+
+	// 반환되는 변수중 Align 하지 않으면셔 값을 사용하지 않는 방법 => _ 활용
+	totalLength, _ := basic.LenAndUpper("Fighting!!")
+	fmt.Print(totalLength)
+
+	basic.AlignNothingForVariables()
+
 	go protocol_client.Server()
 
 	protocol_server.Client()
+
 }
