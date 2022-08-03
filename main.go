@@ -43,6 +43,9 @@ func main() {
 
 	basic.AlignNothingForVariables()
 
+	length, uppercase := basic.DeferSample("Fighting")
+	fmt.Print(length, uppercase)
+
 	go protocol_client.Server()
 
 	protocol_server.Client()
