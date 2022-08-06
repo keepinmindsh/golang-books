@@ -48,3 +48,24 @@ func GoCannotCompareBetweenSlice() {
 
 	// todo : json serializing 하면 nil slice는 null로, empty slice는 []로 대응되었던 것 같다는 제보를 입수. 비어있는 것과 애초에 아무 것도 없는 것은 분명히 다르다.
 }
+
+func NilCompareClient() {
+	var x *int32 = nil
+
+	compare(x)
+
+	var y *int32 = nil
+	var z *int64 = nil
+	compareBetweenNils(y, z)
+}
+
+func compare(x interface{}) {
+
+	// nil은 변수의 데이터 타입도 저장하고 있기 때문에 비교를 하기 위해서는 비교하고 싶은 타입으로 형변환을 해서 사용해야 합니다.
+	// Go에서는 nil을 사용합니다. 다른 언어와 다른 점으로는 Go에서는 nil은 데이터 타입 정보를 기억하고 있다는 것입니다.
+	fmt.Println(x == (*int32)(nil))
+}
+
+func compareBetweenNils(x, y interface{}) {
+	fmt.Println(x == y)
+}

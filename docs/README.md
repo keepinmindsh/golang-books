@@ -24,6 +24,8 @@
 
 > [Golang - Variables Align](https://velog.io/@unani92/Golang-%EB%B3%80%EC%88%98-%ED%95%A8%EC%88%98-%EC%84%A0%EC%96%B8%ED%95%A0%EB%8B%B9)
 
+> [Golang - Github 패키지 배포](https://pink1016.tistory.com/85)
+
 ### Golang 기반 Clean Architecture
 
 > [Clean Architecture With Go](https://www.joinc.co.kr/w/man/12/golang/robust)

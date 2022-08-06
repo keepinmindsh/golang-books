@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/keepinmindsh/go-lang-module/util"
 	"golang-books/basic"
 	protocol_client "golang-books/protocol/rpc/client"
 	protocol_server "golang-books/protocol/rpc/server"
@@ -49,5 +50,8 @@ func main() {
 	go protocol_client.Server()
 
 	protocol_server.Client()
+
+	// github Library 모듈
+	util.HttpCall()
 
 }
