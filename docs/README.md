@@ -24,7 +24,9 @@
 
 > [Golang - Variables Align](https://velog.io/@unani92/Golang-%EB%B3%80%EC%88%98-%ED%95%A8%EC%88%98-%EC%84%A0%EC%96%B8%ED%95%A0%EB%8B%B9)
 
-> [Golang - Github 패키지 배포](https://pink1016.tistory.com/85)
+> [Golang - Github 패키지 배포](https://pink1016.tistory.com/85)  
+
+> [Golang - New vs Make](https://pronist.dev/102)
 
 ### Golang 기반 Clean Architecture
 
@@ -36,6 +38,7 @@
 
 ### Golang Sample Project for study
 
+> [Effective Go 번역](https://github.com/golangkorea/effective-go/blob/master/SUMMARY.md)
 
 > [go hugo](https://github.com/gohugoio/hugo)
 
