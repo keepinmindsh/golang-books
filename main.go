@@ -2,10 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/keepinmindsh/go-lang-module/util"
 	"golang-books/basic"
-	protocol_client "golang-books/protocol/rpc/client"
-	protocol_server "golang-books/protocol/rpc/server"
 )
 
 func main() {
@@ -24,6 +21,8 @@ func main() {
 	basic.ValueCheck()
 
 	basic.TestPointer()
+
+	basic.TestPointer2()
 
 	basic.Print()
 
@@ -47,11 +46,11 @@ func main() {
 	length, uppercase := basic.DeferSample("Fighting")
 	fmt.Print(length, uppercase)
 
-	go protocol_client.Server()
+	//go protocol_client.Server()
 
-	protocol_server.Client()
+	//protocol_server.Client()
 
 	// github Library 모듈
-	util.HttpCall()
+	//ßßutil.HttpCall()
 
 }

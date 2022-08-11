@@ -27,3 +27,56 @@ func TestPointer() {
 
 	fmt.Println("pointer:", &i)
 }
+
+// TestPointer2 포인터의 역참조를 통해 메모리 주소로 value값 접근이 가능할 수 있었다.
+func TestPointer2() {
+	var example int
+	var pointer *int
+	example = 3
+
+	pointer = &example
+
+	fmt.Println(&example)
+
+	// 포인터의 역참조 (*포인터변수명 = 대입값)
+	*pointer = 5
+
+	fmt.Println(pointer)
+
+	fmt.Println(example)
+}
+
+// 포인터를 인자로 받는 함수
+func EditNamePointer(item *SomeItem) {
+	item.name = "호리병"
+	fmt.Println(&item.name)
+}
+
+type SomeItem struct {
+	id   int
+	name string
+}
+
+// 구조체의 값을 그대로 인자로 받는 함수
+func EditName(item SomeItem) {
+	item.name = "도자기"
+	fmt.Println(&item.name)
+}
+
+func sample() {
+
+	item := SomeItem{1, "항아리"}
+	fmt.Println("--- 객체이름 변수의 주소와 원래의 값 ---")
+	fmt.Println(&item.name)
+	fmt.Println(item.name)
+
+	// 함수의 파라미터로 item 구조체를 전달
+	fmt.Println("--- 객체이름 변경 함수의 주소와 예상 변경값 ---")
+	EditName(item)
+	fmt.Println(item.name)
+
+	// 포인터를 함수의 파라미터로 전달
+	fmt.Println("--- 객체이름 변경 함수의 주소와 예상 변경값(포인터 사용) ---")
+	EditNamePointer(&item)
+	fmt.Println(item.name)
+}
