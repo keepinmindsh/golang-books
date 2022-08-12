@@ -53,4 +53,6 @@ func main() {
 	// github Library 모듈
 	//ßßutil.HttpCall()
 
+	basic.InterfaceSample()
+
 }

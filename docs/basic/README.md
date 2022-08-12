@@ -109,3 +109,39 @@ func TestPointer2() {
 
 go언어는 기본적으로 값에 의한 호출(Call by value)이므로 매개변수를 복사해서 함수 내부로 전달하는데 포인터를 통해 본래의 값을 변경할 수 있다.
 
+### go 에서의 인터페이스 
+
+go 에서 인터페이스는 Java와 달리 구현의 개념이 아닌 Interface가 실제 함수의 추상을 가지고 이를 사용할 수 있는 구조로 되어 있음 
+
+```go
+
+
+func (p Pet) getName() {
+	fmt.Printf("pet name is %s.\n", p.Name)
+}
+
+func (p Pet) getAge() {
+	fmt.Printf("pet age is %d.\n", p.Age)
+}
+
+type GetName interface {
+	getName()
+}
+
+type GetAge interface {
+	getAge()
+}
+
+type PetInfo interface {
+	GetName
+	GetAge
+}
+
+func interfaceSample() {
+	var interfaceSample PetInfo
+
+	interfaceSample.getName()
+}
+
+
+```
