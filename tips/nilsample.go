@@ -1,11 +1,11 @@
-package basic
+package tips
 
 import "fmt"
 
 /*
-	- zero value는 명시적인 초기값을 할당하지 않고 변수를 만들었을 때 해당 변수가 갖게 되는 값이다.
-	- nil은 포인터, 인터페이스, 맵, 슬라이스, 채널, 함수의 zero value이다.
-	출처: https://2kindsofcs.tistory.com/3 [세상에는 두 종류의 cs가 있습니다.:티스토리]
+- zero value는 명시적인 초기값을 할당하지 않고 변수를 만들었을 때 해당 변수가 갖게 되는 값이다.
+- nil은 포인터, 인터페이스, 맵, 슬라이스, 채널, 함수의 zero value이다.
+출처: https://2kindsofcs.tistory.com/3 [세상에는 두 종류의 cs가 있습니다.:티스토리]
 */
 func GoNilSample(args []string) bool {
 	return args != nil
