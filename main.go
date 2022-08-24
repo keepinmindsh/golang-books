@@ -2,10 +2,18 @@ package main
 
 import (
 	"fmt"
+	"golang-books/hello"
 	"golang-books/tips"
 )
 
 func main() {
+
+	hello.HelloWorld()
+
+	//study001()
+}
+
+func study001() {
 	fmt.Println("Hello World!")
 
 	tips.GoStringCannotHaveNil()
@@ -54,5 +62,4 @@ func main() {
 	//ßßutil.HttpCall()
 
 	tips.InterfaceSample()
-
 }
