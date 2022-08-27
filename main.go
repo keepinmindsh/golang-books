@@ -2,13 +2,25 @@ package main
 
 import (
 	"fmt"
-	"golang-books/hello"
+	"github.com/keepinmindsh/go-lang-module/util"
+	"golang-books/problems"
+	"golang-books/setting"
 	"golang-books/tips"
 )
 
 func main() {
 
-	hello.HelloWorld()
+	//hello.HelloWorld()
+
+	problems.PrintSong(20)
+
+	problems.PrintHanoi(100)
+
+	problems.Fibonacci(5)
+
+	setting.Hanoi(3)
+
+	util.Fib(10)
 
 	//study001()
 }
