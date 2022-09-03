@@ -145,3 +145,33 @@ func interfaceSample() {
 
 
 ```
+
+### Go Method Receiver 
+
+Go는 클래스가 없다. 하지만 특정 타입에 대한 메소드를 만들 수 있다.  
+
+Vertex와 Vertex3D 구조체가 있다.  
+
+- Vertex는 Abs라는 메소드를 갖는다.
+
+```go
+package main
+
+import "math"
+
+type Vertex struct {
+  X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+  return math.Sqrt(v.X * v.X + v.Y * v.Y)
+}
+```
+- Vertex3D는 Abs 라는 함수를 통해 연산이 가능하다.
+
+Go에서는 타언어의 인스턴스와 비교해보면 필요한 구조체만 해당 함수에 접근하면 되니까 메모리 다이어트가 필요 없게 되는 것 같다. 
+
+##### Pointer Receiver 
+
+- 메소드가 receiver pointer의 값을 수정할 수 있습니다. 
+- 메소드 호출에 따른 값의 복사를 방지하기 위해서입니다. 구조체가 클 수록 효율이 좋습나다. 
