@@ -6,6 +6,7 @@ import (
 	"golang-books/problems"
 	"golang-books/setting"
 	"golang-books/tips"
+	"golang-books/variables"
 )
 
 func main() {
@@ -17,6 +18,8 @@ func main() {
 	problems.PrintHanoi(100)
 
 	problems.Fibonacci(5)
+
+	variables.Variables()
 
 	setting.Hanoi(3)
 
