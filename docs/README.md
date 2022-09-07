@@ -46,8 +46,9 @@
   
 > [Gin Framework 시작하기](https://dev-yakuza.posstree.com/ko/golang/gin/start/)    
 
-> [Go ORM Started](https://gorm.io/index.html)   
+> [Go ORM Started](https://gorm.io/index.html)     
 
+> [Structuring Application in Go](https://medium.com/@benbjohnson/structuring-applications-in-go-3b04be4ff091)
 
 ### Style Guide 
 
