@@ -175,3 +175,16 @@ Go에서는 타언어의 인스턴스와 비교해보면 필요한 구조체만 
 
 - 메소드가 receiver pointer의 값을 수정할 수 있습니다. 
 - 메소드 호출에 따른 값의 복사를 방지하기 위해서입니다. 구조체가 클 수록 효율이 좋습나다. 
+
+
+### unsupported Scan, storing driver.Value type []uint8 into type *time.Time 발생시
+
+Alright, I found the solution, thanks this answer. The problem goes by adding ?parseTime=true to the db mapper. Like this:
+
+```go
+package main
+
+db, err := sqlx.Connect("mysql", "myuser:mypass@tcp(127.0.0.1:3306)/mydb?parseTime=true")
+
+```
+
