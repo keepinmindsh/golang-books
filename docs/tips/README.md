@@ -184,7 +184,154 @@ Alright, I found the solution, thanks this answer. The problem goes by adding ?p
 ```go
 package main
 
-db, err := sqlx.Connect("mysql", "myuser:mypass@tcp(127.0.0.1:3306)/mydb?parseTime=true")
+func main()  {
+  db, err := sql.Connect("mysql", "myuser:mypass@tcp(127.0.0.1:3306)/mydb?parseTime=true")
+}
 
 ```
 
+### 배역과 슬라이스의 차이점 
+
+- 배열의 크기는 고정, 슬라이스의 크기는 가변 
+- 배열은 복사함녀 별도 메모리를 생성, 슬라이스는 본사할 경우 같은 곳을 참조 
+
+##### 배열 선언 방법
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  arr1 := [5]int{1, 2, 3, 4, 5}
+  arr2 := [...]int{6, 7, 8, 9, 10}
+
+  fmt.Println(arr1)
+  fmt.Println(arr2)
+}
+
+```
+
+##### 슬라이스 선언 방법
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  slice1 := []int{1, 2, 3, 4, 5}
+
+  fmt.Println(slice1)
+}
+
+```
+
+##### 배열과 슬라이스의 크기 변경
+
+- 배열의 초기 선언된 고정 값에서 크기를 늘릴 수 없기 때문에 에러가 발생함. 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  arr1 := [5]int{1, 2, 3, 4, 5}
+  arr1 = append(arr1, 6)
+
+  fmt.Println(arr1)
+}
+
+```
+
+- 슬라이스의 초기에 선언된 크기에서 아이템이 추가될 경우 동적으로 아이템이 추가되었습니다. 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  slice1 := []int{1, 2, 3, 4, 5}
+  slice1 = append(slice1, 6)
+
+  fmt.Println(slice1)
+}
+```
+
+##### 배열과 슬라이스의 복사 
+
+배열의 경우에는 변수를 다른 변수에 복사하면 같은 값을 가지는 새로운 배열이 생깁니다. 
+그리고 원래 있던 배열과 복사한 배열은 메모리 상에 각각의 위치를 가지게 됩니다. 
+
+- 배열 복사 확인 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	a := [3]int{1, 2, 3}
+	b := a
+
+	// 메모리 위치 확인
+	fmt.Println(&a[0]) // 0xc8200122e0
+	fmt.Println(&b[0]) // 0xc820012300
+
+	// 복사한 배열 값을 변경
+	b[0] = 0
+	fmt.Println(a) // [1 2 3]
+	fmt.Println(b) // [0 2 3]
+}
+```
+
+- 슬라이스 복사 확인 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	s1 := []int{1,2,3}
+	s2 := s1
+
+	// 메모리 위치 확인
+	fmt.Println(&s1[0]) // 0xc8200122e0
+	fmt.Println(&s2[0]) // 0xc8200122e0
+
+	// 복사한 슬라이스 값을 변경
+	s2[1] = 0
+
+	// 같은 곳을 잠초하고 있기때문에 원본도 변경
+	fmt.Println(s1) // [1 0 3]
+	fmt.Println(s2) // [1 0 3]
+}
+```
+
+##### 슬라이스를 복사하는 경우 
+
+copy 함수를 사용해 슬라이스를 복사해 사용하면 어느 한쪽 값을 변경해도 서로 영향이 없습니다. 
+슬라이스를 복사해야 하는 경우에는 단순 대입이 아닌 copy 함수를 사용해서 만들어야 합니다.
+
+```go
+package main
+import "fmt"
+
+func main() {
+	slice := []int{0, 10, 20, 30}
+
+	// 새로운 슬라이스를 생성
+	copyslice := make([]int, len(slice))
+	// copy 함수로 슬라이스 복사
+	copy(copyslice, slice)
+
+	// 값 변경
+	copyslice[0] = 100
+
+	fmt.Println(copyslice) // [100 10 20 30]
+	fmt.Println(slice)     // [0 10 20 30]
+}
+```
