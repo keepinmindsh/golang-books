@@ -94,3 +94,50 @@ func main() {
 
 - 복사 하는 시간이 빠른다. 
 - 데이터 캡슐화에 취약하다. 주소값으로 전달되기 때문에 !! 
+
+### Passing Arrays and Slices 
+
+- 배열의 인자는 복사된다. 
+- 배열은 사이즈가 클수 있기 때문에 문제가 될 수 있다.
+
+```go
+package main
+
+import "fmt"
+
+func foo(x [3]int) int {
+	return x[0]
+}
+
+func main() {
+	a := [3]int{1, 2, 3}
+
+	fmt.Println(foo(a))
+
+}
+
+```
+
+- 배열 포인터를 이용한 값 저달 
+
+```go
+package main
+
+import "fmt"
+
+func foo(x *[3]int) int {
+	(*x)[0] = (*x)[0] + 1
+}
+
+func main() {
+	a := [3]int{1, 2, 3}
+
+	fmt.Println(foo(&a))
+}
+
+```
+
+- slices 후에 배열을 전달하는 방법
+  - 슬라이스는 배열에 대한 포인터를 가지고 있다. 
+  - 배열을 전달하지 말고 슬라이스 인자를 전달해서 사용하라!! 
+
