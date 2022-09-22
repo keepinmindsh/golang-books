@@ -335,3 +335,50 @@ func main() {
 	fmt.Println(slice)     // [0 10 20 30]
 }
 ```
+
+### 전역 변수를 사용하지 않도록 해야한다. 
+
+ router 상에 handler 함수 선언시 DB 설정 등에 대해서 함수에 정의할 수 없으므로 전역변수를 사용해야하는 이슈가 생길 수 있는데, 
+이를 경우에는 구조체를 이용하여 전역 변수 대신 구조체 내의 변수로 사용해야 한다. 
+
+
+```go
+package main
+
+import (
+  "database/sql"
+  "fmt"
+  "log"
+  "net/http"
+)
+
+
+type HelloHandler struct {
+	db *sql.DB
+}
+
+func (h *HelloHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	var name string
+	// Execute the query.
+	row := h.db.QueryRow("SELECT myname FROM mytable")
+	if err := row.Scan(&name); err != nil {
+		http.Error(writer, err.Error(), 500)
+		return
+	}
+	// Write it back to the client.
+	fmt.Fprintf(writer, "hi %s!\n", name)
+}
+
+func HttpHandlerStart() {
+	// Open our database connection.
+	db, err := sql.Open("postgres", "")
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Register our handler.
+	http.Handle("/hello", &HelloHandler{db: db})
+	http.ListenAndServe(":8080", nil)
+
+}
+
+```
