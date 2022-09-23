@@ -219,5 +219,45 @@ func CountDigit()  {
     - 제어 흐름 상에 업무 로직의 노출이 아닌 함수의 노출이 중요하다. 
 
 
+### Functions are First-class 
 
+- Function은 다른 유형들처럼 다뤄진다! 
+  - 동적으로 함수를 생성할수 있다. 
+  - 변수는 함수 타입으로 선언될 수 있다. 
+  - 인자로서 전달될 수 있으면서 값으로써 반환될 수 있다. 
+  - 데이터 구조내에 저장될 수 있다.
+
+```go
+package main
+
+import "fmt"
+
+var funcVar func(int) int
+
+func incFn(x int) int {
+  return x + 1
+}
+
+func main() {
+  funcVar = incFn
+
+  fmt.Print(funcVar(1))
+}
+```
+
+- 함수는 () 없이 함수의 오른쪽 편에 사용될 수 있다. 
+
+### 인자로서의 함수 
+
+```go
+package main 
+
+func applyIt(afunct func (int) int, val int) int {
+	return afunct(val)
+}
+```
+
+### 익명함수 
+
+- 함수에 대한 이름을 지을 필요가 없음 
   
