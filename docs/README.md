@@ -50,6 +50,8 @@
 
 > [Structuring Application in Go](https://medium.com/@benbjohnson/structuring-applications-in-go-3b04be4ff091)
 
+> [Don’t go crazy with subpackages](https://github.com/boltdb/bolt)
+
 ### Style Guide 
 
 > [Golang Style Guide](https://github.com/TangoEnSkai/uber-go-style-guide-kr)  
