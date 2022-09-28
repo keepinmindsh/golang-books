@@ -410,3 +410,48 @@ func main() {
 
 ## Class and Encapsulation
 
+- 데이터 필드의 집합과 함수들이 잘 정의된 Responsibility 에 의해서 공유된다.
+
+> 예)  
+>  Point Class 
+>  클래스 의도 : Geometry를 위한 프로그램 
+>  데이터 필드 : x, y 
+>  함수 :   
+>     DistToOrigin(), Quadrant()
+>     AddXOffset(), AddYOffset()
+>     SetX(), SetY() 
+
+- Object 
+  - 클래스의 객체 
+
+- 캡슐화 
+  - 데이터는 프로그래머로부터 보호될 수 있다. 
+  - 데이터는 메소드를 사용함으로써 접급한 수 있다, 
+  - 우리는 데이터를 보호하기 위해서 프로그래머를 믿어서는 안된다.
+
+## Go는 "Class" 키워드가 없음 
+
+- 대부분의 언어는 class 키워드를 가지고 있음
+- 데이터 변수와 함수는 class 블록 내에서 정의되어 있다. 
+
+### Data를 사용해 함수를 연계하는 방법 
+
+- Method는 receiver type 이라는 것을 가진다. 
+- . 에 의해서 메소드를 호출 할 수 있다.
+
+```go
+package main
+
+import "fmt"
+
+type MyInt int
+
+func (mi MyInt) Double() int {
+  return int(mi * 2)
+}
+
+func main() {
+  v := MyInt(3)
+  fmt.Println(v.Double())
+}
+```
