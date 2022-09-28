@@ -337,4 +337,76 @@ func printX()  {
 ### Closure 
 
 - 함수 + 함수의 Scope
-- 함수가 자신의 Scope를 변수들과 함께 반환하거나 전달할 때 
+- 함수가 자신의 Scope 를 변수들과 함께 반환하거나 전달할 때 
+
+## Variadic and Deffered
+
+### Variable Argument Number 
+
+- 함수는 많은 수의 인자를 가질 수 있다. 
+- ... 를 사용하여 변수 인자의 수를 축약할 수 있다. 
+- Slice 처럼 다뤄진다.
+
+- slice를 다중인자를 받을 수 있는 함수로 전달 하할 수 있다. 
+- 전달 할 때 vslice... 과 같이 변수 마지막에 ... 를 붙여야한다. 
+
+```go
+package main
+
+import "fmt"
+
+func getMax(vals ...int) int {
+  maxV := -1
+  for _, v := range vals {
+    if v > maxV {
+      maxV = v
+    }
+  }
+  return maxV
+}
+
+func main() {
+  fmt.Println(getMax(1, 3, 6, 4))
+  vslice := []int{1, 3, 6, 4}
+  fmt.Println(getMax(vslice...))
+}
+```
+
+### Deffered Functio Calls 
+
+- deferred는 함수가 완결되기 전까지는 호출을 지연할 수 있다! 
+- 주로 cleanup 을 위한 프로세스를 위해서 사용된다.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  defer fmt.Println("Bye!")
+  
+  fmt.Println("Hello!")
+}
+```
+
+### Deferred Call Arguments 
+
+- 지연된 호출의 인자는 즉시 평가된다!
+  - 즉 Deffered 호출은 호출 시점의 인자의 상태를 저장해서 이를 사용하는 것이지 이후 해당 연관된 인자가 변경된다고 해서 deferred 호출 시점에는 영향을 미치지 못한다. 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  i := 1
+  defer fmt.Println(i + 1)
+  i++
+  fmt.Println("Hello!")
+}
+
+```
+
+## Class and Encapsulation
+
