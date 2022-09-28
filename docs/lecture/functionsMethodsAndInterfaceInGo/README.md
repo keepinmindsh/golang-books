@@ -414,19 +414,19 @@ func main() {
 
 > 예)  
 >  Point Class 
->  클래스 의도 : Geometry를 위한 프로그램 
->  데이터 필드 : x, y 
->  함수 :   
->     DistToOrigin(), Quadrant()
->     AddXOffset(), AddYOffset()
->     SetX(), SetY() 
+>  클래스 의도 : Geometry를 위한 프로그램  
+>  데이터 필드 : x, y   
+>  함수 :    
+>  * DistToOrigin(), Quadrant()   
+>  * AddXOffset(), AddYOffset()   
+>  * SetX(), SetY()   
 
 - Object 
   - 클래스의 객체 
 
 - 캡슐화 
   - 데이터는 프로그래머로부터 보호될 수 있다. 
-  - 데이터는 메소드를 사용함으로써 접급한 수 있다, 
+  - 데이터는 메소드를 사용함으로써 접급한 수 있다.
   - 우리는 데이터를 보호하기 위해서 프로그래머를 믿어서는 안된다.
 
 ## Go는 "Class" 키워드가 없음 
@@ -490,3 +490,62 @@ func main() {
 
 ```
 
+> Tip) 
+> goland에서 Method Receiver안에서 slice에 append 함수나,   
+> slicing을 적용하려고 한다면 Assignment to method receiver doesn't propagate to other calls 이런 권고 사항이 뜬다.   
+> 즉 Call By Value로 받은 Method Receiver안에서 값을 변경한다면 그 값은 함수 외부로 전달되지 않는다.   
+> 그러므로 Call By Reference인 Pointer Receiver로 전달하여 Slice의 값을 변경해야 한다.
+
+### Implicit Method Argument
+
+- 아래와 같은 방식은 Call By Value에 의한 방식으로 기존의 값을 복사해서 사용할수 있게 처리되었음. 
+
+```go
+package main
+
+import "fmt"
+
+type MyInt int
+
+func (mi MyInt) Double() int {
+  return int(mi * 2)
+}
+
+func main() {
+  v := MyInt(3)
+  fmt.Println(v.Double())
+}
+```
+
+### Structs, again 
+
+- Struct Types 은 필드를 구성한다. 
+
+### Struct with Method
+
+- Struct는 임의의 데이터와 함수를 구성할 수 있다.
+
+```go
+package main
+
+import (
+  "fmt"
+  "math"
+)
+
+type Point struct {
+  x float64
+  y float64
+}
+
+func (p Point) DistToOrig() float64 {
+  t := math.Pow(p.x, 2) + math.Pow(p.y, 2)
+
+  return math.Sqrt(t)
+}
+
+func main() {
+  p1 := Point{3, 4}
+  fmt.Println(p1.DistToOrig())
+}
+```
