@@ -219,7 +219,7 @@ func CountDigit()  {
     - 제어 흐름 상에 업무 로직의 노출이 아닌 함수의 노출이 중요하다. 
 
 
-### Functions are First-class 
+## Functions are First-class 
 
 - Function은 다른 유형들처럼 다뤄진다! 
   - 동적으로 함수를 생성할수 있다. 
@@ -249,6 +249,8 @@ func main() {
 
 ### 인자로서의 함수 
 
+- 함수는 다른 함수의 인자로서 전달 될 수 있음
+
 ```go
 package main 
 
@@ -259,5 +261,80 @@ func applyIt(afunct func (int) int, val int) int {
 
 ### 익명함수 
 
-- 함수에 대한 이름을 지을 필요가 없음 
-  
+- 함수에 대한 이름을 지을 필요가 없음
+
+```go
+package main
+
+import "fmt"
+
+func applyIt(afunct func(int) int, val int) int {
+  return afunct(val)
+}
+
+func main() {
+  v := applyIt(func(x int) int { return x + 1 }, 2)
+  fmt.Println(v)
+}
+```
+
+## 리턴 값으로서의 함수
+
+- 함수가 인자로써 전달 된다. 
+- 함수가 반환될 함수로써 구성된다.
+
+```go
+package main
+
+import (
+  "fmt"
+  "math"
+)
+
+func MakeDistOrigin(o_x, o_y float64) func(float64, float64) float64 {
+  fn := func(x, y float64) float64 {
+    return math.Sqrt(math.Pow(x-o_x, 2) + math.Pow(y-o_y, 2))
+  }
+
+  return fn
+}
+
+func main() {
+  Dist1 := MakeDistOrigin(0, 0)
+  Dist2 := MakeDistOrigin(2, 2)
+  fmt.Println(Dist1(2,2))
+  fmt.Println(Dist2(2,2))
+}
+```
+
+## 함수의 Scope
+
+- 함수내에서 모든 명칭은 유효해야 한다. 
+- 이름은 함수내에서 지역적으로 정의되어야 한다, 
+- [Lexical Scope](https://www.techtarget.com/whatis/definition/lexical-scoping-static-scoping)
+- 함수는 블록안에 정의된 이름을 포함한다.
+
+```go
+package main
+
+import "fmt"
+
+var x int
+
+func foo(y int) {
+  z := 1
+  x = 10
+  // x := 10 이코드는 에러가남...??? Why ? 
+
+  fmt.Println(x, z)
+}
+
+func printX()  {
+  fmt.Println(x)
+}
+```
+
+### Closure 
+
+- 함수 + 함수의 Scope
+- 함수가 자신의 Scope를 변수들과 함께 반환하거나 전달할 때 
