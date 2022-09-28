@@ -455,3 +455,38 @@ func main() {
   fmt.Println(v.Double())
 }
 ```
+
+> Tip)   
+>  receiver type에 pointer를 붙여야 하는 경우에는   
+> * receiver의 값을 변경하고자 할 때(단순히 읽기가 아닌 쓰기 작업도 같이)  
+> * struct의 크기가 커서 deep copy 비용이 클 때  
+> * 코드 일관성(option): 어떤 함수가 포인터 receiver를 사용하는 경우 일관성을 줄 때
+
+```go
+package main
+
+import "fmt"
+
+type Person struct {
+  age int
+}
+
+func (p *Person) setAge(age int) {
+  p.age = age
+}
+
+func (p Person) getAge() int {
+  return p.age
+}
+
+func main() {
+  p := Person{age: 3}
+  p.setAge(10)
+  fmt.Println(p.getAge)
+
+  //OUTPUT
+  //10
+}
+
+```
+
