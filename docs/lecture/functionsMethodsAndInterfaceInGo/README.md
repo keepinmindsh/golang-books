@@ -781,5 +781,71 @@ func main() {
 
 ### Nil Interface Value 
 
+## Using Interface
+
+### Ways to User an Interface 
+
+- 다양한 타입의 파라미터를 가지는 함수가 필요할 경우 
+
+### Pool in a Yard
+
+```go
+package pool
+
+type Shape2D interface {
+	Area() float64
+	Perimeter() float64
+}
+
+type Triangle struct {
+	x float64
+	y float64
+}
+
+func (t Triangle) Area() float64 {
+	
+	return 3.14
+}
+
+func (t Triangle) Perimeter() float64 {
+	
+	return 3.14
+}
+
+type Rectangle struct {
+	x float64
+	y float64
+}
+
+**func (t Rectangle) Area() float64 {
+
+  return 3.14
+}
+
+func (t Rectangle) Perimeter() float64 {
+
+  return 3.14
+}
+
+func FitInYard(s Shape2D) bool {
+	if(s.Area() > 100 && s.Perimeter() > 100) {
+		return true
+    }
+	return false
+}
+
+```
+
+### Empty Interface
+
+- Empty Interface는 어떤 타입이든 정의되어 사용될 수 있다. 
+
+```go
+package main
+
+func PrintMe(val interface())  {
+  fmt.Println(val)
+}
+```
 
 
