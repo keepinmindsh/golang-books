@@ -619,3 +619,45 @@ func main() {
 }
 ```
 
+## Point Receiver 
+
+### Limitations of Methods 
+
+- Receiver는 명시적으로 메소드의 인자로 전달 된다. 기본적으로 Call By Value로 동작한다. 
+- Method는 내부의 데이터를 기본적으로 수정할 수 없다. 이유는 Call By Value이기 때문에 기존의 주소의 객체가 아닌 복사된 객체의 값을 변경하기 때문에 고유의 값을 변경할 수 없다. 
+
+### 만약 사이즈가 큰 Receiver 일 경우 
+
+사이즈가 너무 클 경우에는 Call By Value 에 상당한 시간이 소요된다.
+
+```go
+package offset 
+
+func (p *Point) Offset(v float64){
+	p.x = p.x + v 
+}
+```
+
+## Point Receiver, Referencing, Dereferencing
+
+### No Need to Dereference 
+
+```go
+package offset
+
+func (p *Point) Offset(v int) {
+  p.x = p.x + v
+}
+```
+
+- Pointer는 p로서 참조된다. *p가 아님
+
+### No need to Reference 
+
+
+### Using Pointer Receiver
+
+가질려면 모든 타입이 동일한 포인터 리시버를 가져라! 
+
+- 모든 메소드가 Pointer Receiver를 가지고 있거나 
+- 모든 메소드가 Non Pointer Receiver를 가지고 있거나 
