@@ -549,3 +549,73 @@ func main() {
   fmt.Println(p1.DistToOrig())
 }
 ```
+
+### Controlling Access 
+
+메소드에서 첫번째 글자가 대문자 인것을 통해서 숨겨진 데이터에 접근하는 것을 허용한다.
+
+```go
+package data
+
+import "fmt"
+
+var x int = 1
+
+func PrintX() {
+  fmt.Println(x)
+}
+```
+
+```go
+package main
+
+import "data"
+
+func main()  {
+  data.PrintX()
+}
+```
+
+### Controlling Access to Structs 
+
+첫번째 글자를 소문자로 시작해서 구조체의 멤버 변수를 숨길 수 있다.
+
+```go
+package data
+
+import "fmt"
+
+type Point struct {
+  x float64
+  y float64
+}
+
+func (p *Point) InitMe(xn, yn float64) {
+  p.x = xn
+  p.y = yn
+}
+
+func (p *Point) Scale(v float64) {
+  p.x = p.x * v
+  p.y = p.y * v
+}
+
+func (p *Point) PrintMe() {
+  fmt.Println(p.x, p.y)
+}
+
+```
+
+
+```go
+package main 
+
+func main() {
+	var p data.Point 
+	
+	p.InitMe(10.1, 11.1)
+	p.Scale(1.123)
+	p.PrintMe()
+}
+```
+
