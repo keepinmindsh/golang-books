@@ -848,4 +848,149 @@ func PrintMe(val interface())  {
 }
 ```
 
+## Concealing Type Differences
 
+- Interface는 type 사이의 차이점(구현)을 숨긴다.
+  - 종종 타입의 실제 구현의 차이에 따라서 다른 프로세스를 활용해야하는 경우가 있다! 
+
+### Type Assertions for Disambiguation 
+
+```go
+package main
+
+
+type Shape2D interface {
+  Area() float64
+  Perimeter() float64
+}
+
+type Triangle struct {
+  x float64
+  y float64
+}
+
+func (t Triangle) Area() float64 {
+
+  return 3.14
+}
+
+func (t Triangle) Perimeter() float64 {
+
+  return 3.14
+}
+
+type Rectangle struct {
+  x float64
+  y float64
+}
+
+**func (t Rectangle) Area() float64 {
+
+  return 3.14
+}
+
+func (t Rectangle) Perimeter() float64 {
+
+  return 3.14
+}
+
+func DrwaShape(s Shape2D) bool {
+	rect, ok := s.(Rectangle)
+	if ok {
+		DrwaRect(rect)
+    }
+	
+	tri, ok := s.(Triangle)
+	if ok {
+		DrawRect(tri)
+    }
+	
+	return ok
+}
+```
+
+### Type Switch 
+
+```go
+package main
+
+
+type Shape2D interface {
+  Area() float64
+  Perimeter() float64
+}
+
+type Triangle struct {
+  x float64
+  y float64
+}
+
+func (t Triangle) Area() float64 {
+
+  return 3.14
+}
+
+func (t Triangle) Perimeter() float64 {
+
+  return 3.14
+}
+
+type Rectangle struct {
+  x float64
+  y float64
+}
+
+**func (t Rectangle) Area() float64 {
+
+  return 3.14
+}
+
+func (t Rectangle) Perimeter() float64 {
+
+  return 3.14
+}
+
+func DrawShape(s Shape2D) bool {
+  switch sh := s.(type) {
+    case Rectangle:
+        DrawRect(sh)
+	case Triangle:
+		DrawRect(sh)
+  }
+  
+  return false
+}
+```
+
+## Error Interface 
+
+```go
+package error
+
+type error interface {
+	Error() string
+}
+```
+
+- 잘 작성된 예 
+  - error == nil
+
+### Handling Error
+
+```go
+package errortest
+
+import (
+  "fmt"
+  "os"
+)
+
+func error() {
+  f, err := os.Open("/harris/test.txt")
+
+  if err != nil {
+    fmt.Println(err)
+	return
+  }
+}
+```
