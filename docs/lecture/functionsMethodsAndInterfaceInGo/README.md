@@ -661,3 +661,125 @@ func (p *Point) Offset(v int) {
 
 - 모든 메소드가 Pointer Receiver를 가지고 있거나 
 - 모든 메소드가 Non Pointer Receiver를 가지고 있거나 
+
+## Polymorphism 
+
+### Inheritance ( 상속 )
+
+- Golang은 상속의 개념을 가지고 있지 않음 
+
+### Overriding
+
+## Interfaces
+
+- Method Signature의 구성 
+  - Name, Parameter, return values 
+
+### Satisfying an Interface 
+
+- 마치 상속의 Overriding과 비슷한 개념을 가지고 있음 
+
+### Interface 정의 
+
+- Triangle type은 Shape2D 인터페이스를 만족해야 한다. 
+
+```go
+package main 
+
+type Shape2D interface {
+	Area() float64
+	Perimeter() float64
+}
+
+type Triangle {
+	
+}
+
+func (t Triangle) Area() float64 {
+	
+}
+
+func (t Triangle) Perimeter() float64 {
+
+}
+
+```
+
+## Interface vs Concrete Types
+
+- Concrete Types
+  - 정확한 구현을 가지고 가지고 있어야함. 
+  - 내부 구현이 모두 작성된 메소드를 가지고 있어야함. 
+
+- Interface Types
+  - 추상화면 메소드 정의를 가지고 있음 
+
+### Interface Values 
+
+- 변수에 할당될 수 있다. 
+- 인자로 전달되거나 , 반환될 수 있다. 
+- Interfaces Value는 2개의 컴포넌트를 가지고 있다. 
+  - Dynamic Type - Concrete Type에 할당되기 위한 것 
+  - Dynamic Value - Dynamic Type의 값 
+
+### Interface Type 정의하기
+
+- Dynamic Type : Dog, Dynamic Value : d1
+
+```go
+package main
+
+import "fmt"
+
+type Speaker interface{ Speak() }
+
+type Dog struct{ name string }
+
+func (d Dog) Speak() {
+  fmt.Println(d.name)
+}
+
+func main()  {
+	var s1 Speaker
+	var d1 Dog{"Brian"}
+	s1 = d1 
+	s1.Speak()
+  
+}
+```
+
+### Interface with Nil Dynamic Value
+
+- 인터페이스는 nil dynamic value를 가질수 있다. 
+  - Speak()를 nil 일지라도 호출할 수 있다.
+
+```go
+package main
+
+import "fmt"
+
+type Speaker interface{ Speak() }
+
+type Dog struct{ name string }
+
+func (d *Dog) Speak() {
+  if d == nil {
+	  fmt.Println("<noise>")
+  }else{
+	  fmt.Println(d.name)
+  }
+}
+
+func main() {
+  var s1 Speaker
+  var d1 *Dog
+
+  s1 = d1
+  s1.Speak()
+}
+```
+
+### Nil Interface Value 
+
+
+
