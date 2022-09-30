@@ -347,7 +347,7 @@ func printX()  {
 - ... 를 사용하여 변수 인자의 수를 축약할 수 있다. 
 - Slice 처럼 다뤄진다.
 
-- slice를 다중인자를 받을 수 있는 함수로 전달 하할 수 있다. 
+- slice를 다중인자를 받을 수 있는 함수로 전달 할 수 있다. 
 - 전달 할 때 vslice... 과 같이 변수 마지막에 ... 를 붙여야한다. 
 
 ```go
@@ -372,7 +372,7 @@ func main() {
 }
 ```
 
-### Deffered Functio Calls 
+### Deferred Function Calls 
 
 - deferred는 함수가 완결되기 전까지는 호출을 지연할 수 있다! 
 - 주로 cleanup 을 위한 프로세스를 위해서 사용된다.
@@ -426,7 +426,7 @@ func main() {
 
 - 캡슐화 
   - 데이터는 프로그래머로부터 보호될 수 있다. 
-  - 데이터는 메소드를 사용함으로써 접급한 수 있다.
+  - 데이터는 메소드를 사용함으로써 접근할 수 있다.
   - 우리는 데이터를 보호하기 위해서 프로그래머를 믿어서는 안된다.
 
 ## Go는 "Class" 키워드가 없음 
@@ -783,7 +783,7 @@ func main() {
 
 ## Using Interface
 
-### Ways to User an Interface 
+### Ways to use an Interface 
 
 - 다양한 타입의 파라미터를 가지는 함수가 필요할 경우 
 
@@ -813,11 +813,11 @@ func (t Triangle) Perimeter() float64 {
 }
 
 type Rectangle struct {
-	x float64
-	y float64
+  x float64
+  y float64
 }
 
-**func (t Rectangle) Area() float64 {
+func (t Rectangle) Area() float64 {
 
   return 3.14
 }
@@ -884,7 +884,7 @@ type Rectangle struct {
   y float64
 }
 
-**func (t Rectangle) Area() float64 {
+func (t Rectangle) Area() float64 {
 
   return 3.14
 }
@@ -940,7 +940,7 @@ type Rectangle struct {
   y float64
 }
 
-**func (t Rectangle) Area() float64 {
+func (t Rectangle) Area() float64 {
 
   return 3.14
 }
