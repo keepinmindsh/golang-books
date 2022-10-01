@@ -92,4 +92,179 @@
 - 프로그래머는 병렬성을 가능하기 만든다. 
 - 하드웨어 매핑은 다양한 요소에 영향을 받는다. 
 
+## Concurrency Basic 
+
+### Processes
+
+### Memory
+
+ - 가상의 주소 공간 
+ - Code, Stack, Heap, Shared Library
+
+### Registers 
+
+ - Program Counter, Data Regs
+
+### Operating Systems
+
+- 많은 프로세스가 동시에 실행 될 수 있도록 허용한다.
+- Process 간의 변경은 빠르게 일어난다. 
+  - 20 ms 이내 
+
+### Scheduling Process 
+
+- 병력적인 실행의 환상을 심어주는 역할 
+- Operating System은 실행을 위해서 프로세스의 실행 계획을 관리한다. 
+- OS는 CPU, Memory 등등에 공평한 접근을 제공한다. 
+
+### Context Switching 
+
+- 제어흐름은 하나의 프로세스에서 다른 프로세르로 변경된다.
+  - 이때 발생되는 것을 Context Switching이라고 한다. 
+
+- 프로세스의 컨텍스트(문맥)은 반드시 변경되어 사용되어야 한다. 
+
+### Thread And GoRoutines 
+
+- Thread 는 Context를 공유한다. 
+- 많은 스레드가 하나의 프로세스 안에 존재할 수 있다. 
+
+### Goroutines 
+
+- Go에서의 스레드와 같은 역할 
+- 많은 고루틴은 Single OS Thread 안애서 실행된다.
+
+### Go Runtime Scheduler 
+
+- OS Thread 안에서 goroutines의 실행 계획을 관리한다. 
+- 마치 작은 OS 처럼 동작한다. 
+- Logical Processor 는 하나의 Thread 와 연결된다. 
+
+### Interleavings 
+
+- 하나의 Task 내에서 실행의 순서는 알수 있음. 
+- 동시에 실행되는 Task 들 사이의 실행의 순서는 알수 없음. 
+- Task들 사이의 Interleaving은 알 수 없음. 
+
+- 많은 Interleavings이 가능함. 
+  - 반드시 모든 가능성에 대해서 고려해야한다!
+- 순서를 만드는 것은 결정가능한 항목이 아님 
+
+### Race Conditions 
+
+- 결과는 무질서한 순서에 의존한다. 
+- 경쟁은 객체 간의 통신에 의해서 발생할 수 있다. 
+
+## Goroutine
+
+- One Goroutine 은 main() 함수를 실행할 때 자동으로 생성된다. 
+- 다른 Goroutine 은 go keyword를 이용해서 생성할 수 있다.
+
+아래의 코드에서 foo() 함수 뒤의 a = 2는 foo()가 끝나기 전까지는 실행될 수 없다. 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  a := 1
+  foo()
+  a = 2
+
+  fmt.Println(a)
+}
+
+func foo() {
+	fmt.Println("This is Foo!")
+}
+```
+
+아래의 코드에서 foo() 함수 뒤의 a = 2는 foo() 끝나는 것을 기다리지 않는다.   
+그 이유는 go foo() 라인이 실행될 때 새로운 GoRoutine이 생성되며 Go Runtime Schedule에 의해서 실행되지만  
+이게 언제끝날지도 우리는 알수 없지만 a = 2는 foo() 함수가 끝나는 것을 기다리지 않는 상태로 완결된다는 것을 인식해야한다.   
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  a := 1
+  go foo()
+  a = 2
+
+  fmt.Println(a)
+}
+
+func foo() {
+  fmt.Println("This is concurrent Foo")
+}
+
+```
+
+### Existing a Goroutine 
+
+- A GoRoutine는 Code가 완료되면 종료된다, 
+- 만약에 Main Goroutine이 끝난다면, 그외의 다른 GoRoutine은 종료된다. 
+  - 즉 만약 Main GoRoutine이 끝날 때, Other Goroutine의 실행 여부와 상관 없이 강제로 모두 종료시킨다. 
+
+### Early Exit
+
+아래의 코드에서 print의 우선순위는 우리가 정할 수 없다. 다만 Go Runtime Schedule은 Main Goroutine이 먼저 실행되는 것을 선호한다.  
+**다만 이것은 Go 버전에 따라 달라질수 도 있는 일이다!** 
+
+- 오직 "Main Routine" 만 출력된다. 
+- 새로운 GoRoutine이 시작되기 전에 메인이 종료된다. 
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  go fmt.Println("New Routine")
+  fmt.Println("Main Routine")
+}
+
+```
+
+### Delayed Exit
+
+GoRoutine을 위해서 지연을 넣는 코드는 좋은 코드가 아님.  
+아래와 같은 코드는 동작은 함... 하지만 저렇게 하면 의미가 없음... 
+
+아래의 코드는 때때로 동작할수도 있고 때때로 에러를 일으킬 수 도 있다.
+
+```go
+package main
+
+import (
+  "fmt"
+  "time"
+)
+
+func main() {
+  go fmt.Println("New Routine")
+  time.Sleep(100 * time.Millisecond)
+  fmt.Println("Main Routine")
+}
+
+```
+
+### Synchronization 
+
+전역 이벤트를 사용하는 것은 모든 스레드에 의해서 동시에 보여질 수 있는 위치에 있는 것이다. (동시에 접근할 수 있다는 것) 
+
+- 모든 스레드에 하나의 값에 대해서 전역적으로 접근할 때, 해당 값을 접근하는 순서, 위치에 따라서 값이 변경될 수 있음 
+  - go routine을 사용할 때 고려해야할 사항임. 
+  - 우리가 원하는 오퍼레이션 시점에 값을 정의하고 싶을 때 Synchronization 을 관리할 수 있다. 
+- 동기화는 성능을 느리게할 수 있지만 필수적으로 사용해야하는 경우가 발생할 수 있다. 
+
+### Sync WaitGroup 
+
+- Sync Package 는 goroutine 사이의 동기화를 하기위한 함수를 제공한다. 
+- sync.WaitGroup는 GoRoutine에게 다른 GoRoutine을 강제적으로 기다리라고 하기 위한 것임!
+- 고루틴이 생길 때마다 internal counter가 생성된다. 
+  - sync.WaitGroup은 internal counter를 이용해서 고루틴을 대기 시킨다.
 
