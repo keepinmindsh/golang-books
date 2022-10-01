@@ -268,3 +268,8 @@ func main() {
 - 고루틴이 생길 때마다 internal counter가 생성된다. 
   - sync.WaitGroup은 internal counter를 이용해서 고루틴을 대기 시킨다.
 
+![Group Routing Sync Wait](https://github.com/keepinmindsh/golang-books/blob/main/docs/assets/Concurrency_005.png)
+
+- Add() 는 숫자를 증가시킨다. 
+- Done() 은 숫자를 감소시킨다. 
+- Wait()는 숫자가 0이 될 때까지 대기한다. 
