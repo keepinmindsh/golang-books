@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/keepinmindsh/go-lang-module/util"
+	"golang-books/goroutines"
 	"golang-books/problems"
 	"golang-books/setting"
 	"golang-books/tips"
@@ -10,6 +11,8 @@ import (
 )
 
 func main() {
+
+	goroutines.Execute()
 
 	//hello.HelloWorld()
 

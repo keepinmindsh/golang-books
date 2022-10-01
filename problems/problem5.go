@@ -59,7 +59,7 @@ func AnimalAct(action string, animal AnimalAction) {
 	}
 }
 
-func main() {
+func Problem5() {
 	AnimalAct("MOVE", Cow{})
 	AnimalAct("EAT", Cow{})
 	AnimalAct("SPEAK", Cow{})

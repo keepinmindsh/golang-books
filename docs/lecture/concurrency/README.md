@@ -272,4 +272,146 @@ func main() {
 
 - Add() 는 숫자를 증가시킨다. 
 - Done() 은 숫자를 감소시킨다. 
-- Wait()는 숫자가 0이 될 때까지 대기한다. 
+- Wait()는 숫자가 0이 될 때까지 대기한다.
+
+```go
+package main
+
+import (
+  "fmt"
+  "sync"
+)
+
+func foo(wg *sync.WaitGroup) {
+  fmt.Printf("New Routine")
+    wg.Done()
+}
+
+func main()  {
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go foo(&wg)
+	wg.Wait()
+	fmt.Printf("Main Routine")
+}
+```
+
+## Goroutine Communication 
+
+- Goroutine 는 하나의 큰 작업을 실행하기 위해서 함께 작업하는 경우가 많다. 
+- 협력을 위한 데이터를 전송해야 한다. 
+  - Main Routine으로 부터 각각의 Sub Routine으로 전송되어야 하고 
+  - Sub Routine으로 부터 Main Routine으로 전송되어야 한다. 
+
+### Channels
+
+- Goroutine 사이에 대이터를 전송한다. 
+- Channels은 타입이다. 
+- 채널을 만들기 위해서 make()함수를 사용하라 
+
+```go
+package main
+
+func main()  {
+	c := make(chan int)
+}
+```
+
+- Send and Receive using Arrow Operations 
+
+- Send Data on Channel 
+
+```go
+package main
+
+func main()  {
+    c := make(chan int)
+    
+	c <- 3
+}
+```
+
+- Receive Data from a channel 
+
+```go
+package main
+
+func main()  {
+    c := make(chan int)
+  
+	x := <- c
+}
+```
+
+### Channel Example
+
+```go
+package main
+
+import "fmt"
+
+func prod(v1 int, v2 int, c chan int) {
+  c <- v1 * v2
+}
+
+func main() {
+  c := make(chan int)
+  go prod(1, 2, c)
+  go prod(3, 4, c)
+  a := <-c
+  b := <-c
+  fmt.Println(a * b)
+}
+```
+
+### Unbuffered Channel 
+
+- 버퍼로 구성되어 있지 않는 채널은 데이터를 유지할 수 없음 
+  - Sending(전송)은 데이터를 받을 때까지 차단한다. ( Block until data is received)
+  - Receiving(수신)은 데이터가 전송되기 전까지 차단한다. ( Block until data is sent )
+
+### Blocking And Synchronization 
+
+- Channel Communication 는 동기화가 기본이다. 
+- Blocking 은 커뮤니케이션을 위해서 대기상태가 되는 것과 같다, 
+
+### Channel Capacity 
+
+- 채널은 제한된 수의 오브젝트를 가질 수 있다. 
+- Capacity는 오브젝트의 수리르 이야기 한다. 이것은 Transit 상태에서 유지할 수 있는 수를 의미한다.
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+  c := make(chan int, 3)
+  fmt.Println(c)
+}
+```
+
+Blocking은 기본적으로 좋은 것은 아니기 때문에 Capacity에 대해서 잘 고민해야한다. 왜나면 Block는 buffer가 풀일 경우에 발생하기 때문이다. 
+수신 받는 것도 buffer가 없을 때 Block이 발생한다. 
+
+### Channel Blocking, Receive 
+
+![Group Routing Sync Wait](https://github.com/keepinmindsh/golang-books/blob/main/docs/assets/Concurrency_005.png)
+
+위의 코드는 반드시 에러가 발생한다.   
+
+우선 해당 코드가 Main 에서 실행될 때, T1, T2가 Go Routine에 의해서 동시에 실행될 때 T2는 버퍼가 비어있기 때문에 대기한다. 
+그러다가 T1이 Channel에 버퍼를 넣어주면 T2는 그제서야 Buffer에서 채널의 값을 가져와서 설정한다.   
+여기에서 문제가 생기는데 b := <- c 는 버퍼에서 공백인데 넣어주는 곳이 아무곳도 없기 때문에 에러가 발생하게 된다.   
+
+
+반대의 경우에도 동일한 이슈가 생길 수 있는데 버버로 2개의 값을 보냈으나 받는 것이 오직 하나라면 이 경우에도 에러가 발생한다. 
+
+### Use of Buffering 
+
+- Sender와 Receiver가 정확히 동일한 속도로 처리될 필요가 없을 때 사용한다.
+  - Buffer는 Producer와 Consumer 의 구조에서 도움이 된다.
+    - Producer : Generating Data
+    - Consumer : Use Data 
+  - [Producer / Consumer 패턴](http://www.gisdeveloper.co.kr/?p=10325)
+

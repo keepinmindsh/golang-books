@@ -13,7 +13,7 @@ func SWAT(array []int) []int {
 	return array
 }
 
-func main() {
+func Problem6() {
 	array := []int{11, 14, 3, 8, 18, 17, 43}
 	fmt.Println(SWAT(array))
 }
